@@ -3,6 +3,7 @@ from typing import Optional
 
 from rasa_nlu.components import Component
 from rasa_nlu.model import Metadata
+import os.path
 import urllib
 
 class MitieNLP(Component):
@@ -26,9 +27,10 @@ class MitieNLP(Component):
         # type: (str) -> dict
         print mitie_file
         if self.extractor is None:
-            if "http" in mitie_file:
+            fileName = mitie_file.split('/')[-1]
+            if "http" in mitie_file and os.path.isfile(fileName):
                 url = mitie_file
-                mitie_file = mitie_file.split('/')[-1]
+                mitie_file = fileName
                 print mitie_file
                 urllib.urlretrieve (url+"?dl=1", mitie_file)
 
