@@ -1,8 +1,9 @@
+from mitie import total_word_feature_extractor
 from typing import Optional
 
 from rasa_nlu.components import Component
 from rasa_nlu.model import Metadata
-
+import urllib
 
 class MitieNLP(Component):
 
@@ -23,10 +24,15 @@ class MitieNLP(Component):
 
     def pipeline_init(self, mitie_file):
         # type: (str) -> dict
-        import mitie
-
+        print mitie_file
         if self.extractor is None:
-            self.extractor = mitie.total_word_feature_extractor(mitie_file)
+            if "http" in mitie_file:
+                url = mitie_file
+                mitie_file = mitie_file.split('/')[-1]
+                print mitie_file
+                urllib.urlretrieve (url+"?dl=1", mitie_file)
+
+            self.extractor = total_word_feature_extractor(mitie_file)
         MitieNLP.ensure_proper_language_model(self.extractor)
         return {"mitie_feature_extractor": self.extractor}
 
