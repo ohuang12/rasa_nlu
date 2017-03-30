@@ -30,10 +30,9 @@ class MitieNLP(Component):
             fileName = mitie_file.split('/')[-1]
             if "http" in mitie_file and not os.path.isfile(fileName):
                 url = mitie_file
-                mitie_file = fileName
                 print mitie_file
                 urllib.urlretrieve (url+"?dl=1", mitie_file)
-
+            mitie_file = fileName
             self.extractor = total_word_feature_extractor(mitie_file)
         MitieNLP.ensure_proper_language_model(self.extractor)
         return {"mitie_feature_extractor": self.extractor}
