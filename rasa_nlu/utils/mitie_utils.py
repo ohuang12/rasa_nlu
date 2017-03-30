@@ -28,7 +28,7 @@ class MitieNLP(Component):
         print mitie_file
         if self.extractor is None:
             fileName = mitie_file.split('/')[-1]
-            if "http" in mitie_file and not os.path.isfile("/"+fileName):
+            if "http" in mitie_file and not os.path.isfile("./"+fileName):
                 url = mitie_file
                 print mitie_file
                 urllib.urlretrieve (url+"?dl=1", mitie_file)
